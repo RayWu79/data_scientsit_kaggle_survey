@@ -10,7 +10,7 @@ class CreateKaggleDB():
         for survey_year in self.survey_years:
             file_path = f"data/kaggle_survey_{survey_year}_responses.csv"
             df = pd.read_csv(file_path, low_memory=False, skiprows=[1])
-            df = df.iloc[:, 1:]
+            df = df.iloc[:, 1:] # drop first column
             self.df_dict[survey_year, "responses"] = df
             df = pd.read_csv(file_path, nrows=1)
             questions_descriptions = df.values.ravel() # make One-dimensional array
@@ -22,8 +22,8 @@ class CreateKaggleDB():
         column_names = self.df_dict[survey_year, "responses"].columns
         descriptions = self.df_dict[survey_year, "question_descriptions"]
         for column_name, description in zip(column_names, descriptions):
-            column_name_split = column_name.split("_")
-            description_split = description.split(" - ")
+            column_name_split = column_name.split("_") # Split columns by "_"
+            description_split = description.split(" - ") #Split description by " - "
             if len(column_name_split) == 1:
                 question_index = column_name_split[0]
                 question_indexes.append(question_index)
@@ -50,6 +50,20 @@ class CreateKaggleDB():
         response_df.columns = question_indexes
         response_df_reset_index = response_df.reset_index()
         response_df_melted = pd.melt(response_df_reset_index, id_vars="index", var_name="question_index")
+        # pd.melt: Unpivot a DataFrame from wide to long format, optionally leaving identifiers set.
+        # Example: 
+        #    id   A   B   C
+        # 0   1  10  40  70
+        # 1   2  20  50  80
+        #        |
+        #        V
+        #    id variable  value
+        # 0   1        A     10
+        # 1   2        A     20
+        # 3   1        B     40
+        # 4   2        B     50
+        # 6   1        C     70
+        # 7   2        C     80
 
         response_df_melted["responded_in"] = survey_year
         response_df_melted = response_df_melted.rename(columns={"index":"respondent_id"})

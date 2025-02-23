@@ -1,4 +1,6 @@
-# Introduction
+# Kaggle Survey Analysis for Data Scientsit
+
+## Introduction
 
 The "Data Scientist's Toolbox" project conducts a longitudinal study using the Kaggle Machine Learning and Data Science Survey questionnaires from 2020, 2021, and 2022 hosted on [kaggle.com](https://www.kaggle.com). It performs an exploratory analysis addressing the following three common beginner questions:
 
@@ -8,7 +10,7 @@ The "Data Scientist's Toolbox" project conducts a longitudinal study using the K
 
 We used `pandas` and `sqlite3` to build a database, and `matplotlib` to perform a proof-of-concept and produce the final visualizations.
 
-# How to Reproduce
+## How to Reproduce
 
 - Install Miniconda.
 - Create the environment using the `environment.yml` file:
